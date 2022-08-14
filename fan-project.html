@@ -7,12 +7,9 @@
     <title>Document</title>
   </head>
   <style>
-    div {
-      position: absolute;
-    }
     .contan {
       height: 500px;
-
+      position: absolute;
       transition: transform 0.5s ease;
       width: 500px;
     }
@@ -38,10 +35,11 @@
       top: 50%;
       border-radius: 50px 0 50px 50px;
     }
-    button:first-of-type {
+    .spin {
       margin-left: -1000px;
     }
-    button {
+    .spin,
+    .stop {
       padding: 20px;
       margin-top: 50px;
     }
@@ -54,16 +52,24 @@
       justify-content: center;
       align-items: center;
       transition: all 2s ease;
-      background: linear-gradient(white, blue);
     }
     body {
       overflow: hidden;
+      background: blue;
     }
     .hidden {
       display: none;
     }
     .finish {
+      width: 200px;
+      position: absolute;
+      top: 50%;
+      left: 70%;
+      text-align: center;
+      border-radius: 20px;
+      margin-left: auto;
       color: black;
+      background-color: white;
     }
   </style>
   <body>
@@ -77,33 +83,50 @@
       <button class="spin">Spin faster</button>
       <button class="stop">Stop</button>
     </div>
-    <div class="finish">
-      <p>Now look what you did</p>
-      <button class="stop">Press me to stop all the spinning</button>
+    <div class="finish hidden">
+      <p>Now look what you did.Press me to stop things going wild</p>
     </div>
     <script>
       let bigconta = document.querySelector(".bigconta");
-      let interval;
+      let intervalContainer;
+      let intervalBigContainer;
       let rotation = 2;
       let spin = document.querySelector(".spin");
       let stop = document.querySelector(".stop");
       let container = document.querySelector(".contan");
+      let finish = document.querySelector(".finish");
+      function stopRotatingContainer() {
+        for (let i = 0; i <= intervalContainer; i++) {
+          clearInterval(i);
+        }
+      }
       spin.addEventListener("click", () => {
-        interval = setInterval(() => {
+        if (!finish.classList.contains("hidden")) {
+          finish.classList.add("hidden");
+        }
+        intervalContainer = setInterval(() => {
           container.style.transform = `rotate(${rotation * 90}deg)`;
           rotation++;
         }, 500);
-        if (interval === 20) {
-          setInterval(() => {
+        if (intervalContainer % 20 === 0) {
+          intervalBigContainer = setInterval(() => {
             bigconta.style.transform = `rotate(${rotation * 90}deg)`;
             rotation++;
           }, 500);
+          setTimeout(() => {
+            finish.classList.remove("hidden");
+          }, 3000);
         }
       });
-      stop.addEventListener("click", () => {
-        for (let i = 0; i <= interval; i++) {
-          clearInterval(i);
-        }
+
+      stop.addEventListener("click", stopRotatingContainer);
+      finish.addEventListener("click", () => {
+        rotation = 2;
+        clearInterval(intervalBigContainer);
+        stopRotatingContainer();
+
+        container.style.transform = `rotate(0deg)`;
+        bigconta.style.transform = `rotate(0deg)`;
       });
     </script>
   </body>
