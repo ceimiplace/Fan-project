@@ -112,6 +112,7 @@
       for (let i = 0; i <= intervalContainer; i++) {
         clearInterval(i);
       }
+      spin.textContent = "Spin faster"
     }
     spin.addEventListener("click", () => {
       if (!finish.classList.contains("hidden")) {
