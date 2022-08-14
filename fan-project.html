@@ -1,133 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <style>
-    .contan {
-      height: 500px;
-      position: absolute;
-      transition: transform 0.5s ease;
-      width: 500px;
-    }
-    .contan div {
-      position: absolute;
-      width: 250px;
-      height: 250px;
-      border: 2px solid black;
-    }
-    .one {
-      border-radius: 50px 50px 0 50px;
-    }
-    .two {
-      left: 50%;
-      border-radius: 50px 50px 50px 0px;
-    }
-    .three {
-      top: 50%;
-      left: 50%;
-      border-radius: 0 50px 50px 50px;
-    }
-    .four {
-      top: 50%;
-      border-radius: 50px 0 50px 50px;
-    }
-    .spin {
-      margin-left: -1000px;
-    }
-    .spin,
-    .stop {
-      padding: 20px;
-      margin-top: 50px;
-    }
-    .bigconta {
-      width: 98vw;
-      height: 100vh;
-      overflow: hidden;
-      border: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: all 2s ease;
-    }
-    body {
-      overflow: hidden;
-      background: blue;
-    }
-    .hidden {
-      display: none;
-    }
-    .finish {
-      width: 200px;
-      position: absolute;
-      top: 50%;
-      left: 70%;
-      text-align: center;
-      border-radius: 20px;
-      margin-left: auto;
-      color: black;
-      background-color: white;
-    }
-  </style>
-  <body>
-    <div class="bigconta">
-      <div class="contan">
-        <div class="one"></div>
-        <div class="two"></div>
-        <div class="three"></div>
-        <div class="four"></div>
-      </div>
-      <button class="spin">Spin faster</button>
-      <button class="stop">Stop</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<style>
+  .contan {
+    height: 500px;
+    position: absolute;
+    transition: transform 0.5s ease;
+    width: 500px;
+  }
+
+  .contan div {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border: 2px solid black;
+  }
+
+  .one {
+    border-radius: 50px 50px 0 50px;
+  }
+
+  .two {
+    left: 50%;
+    border-radius: 50px 50px 50px 0px;
+  }
+
+  .three {
+    top: 50%;
+    left: 50%;
+    border-radius: 0 50px 50px 50px;
+  }
+
+  .four {
+    top: 50%;
+    border-radius: 50px 0 50px 50px;
+  }
+
+  .spin {
+    margin-left: -1000px;
+  }
+
+  .spin,
+  .stop {
+    padding: 20px;
+    margin-top: 50px;
+  }
+
+  .bigconta {
+    width: 98vw;
+    height: 100vh;
+    overflow: hidden;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 2s ease;
+  }
+
+  body {
+    overflow: hidden;
+    background: blue;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .finish {
+    width: 200px;
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    text-align: center;
+    border-radius: 20px;
+    margin-left: auto;
+    color: black;
+    background-color: white;
+  }
+</style>
+
+<body>
+  <div class="bigconta">
+    <div class="contan">
+      <div class="one"></div>
+      <div class="two"></div>
+      <div class="three"></div>
+      <div class="four"></div>
     </div>
-    <div class="finish hidden">
-      <p>Now look what you did.Press me to stop things going wild</p>
-    </div>
-    <script>
-      let bigconta = document.querySelector(".bigconta");
-      let intervalContainer;
-      let intervalBigContainer;
-      let rotation = 2;
-      let spin = document.querySelector(".spin");
-      let stop = document.querySelector(".stop");
-      let container = document.querySelector(".contan");
-      let finish = document.querySelector(".finish");
-      function stopRotatingContainer() {
-        for (let i = 0; i <= intervalContainer; i++) {
-          clearInterval(i);
-        }
+    <button class="spin">Spin faster</button>
+    <button class="stop">Stop</button>
+  </div>
+  <div class="finish hidden">
+    <p>Now look what you did.Press me to stop things going wild</p>
+  </div>
+  <script>
+    let bigconta = document.querySelector(".bigconta");
+    let intervalContainer;
+    let intervalBigContainer;
+    let rotation = 2;
+    let spin = document.querySelector(".spin");
+    let stop = document.querySelector(".stop");
+    let container = document.querySelector(".contan");
+    let finish = document.querySelector(".finish");
+    function stopRotatingContainer() {
+      for (let i = 0; i <= intervalContainer; i++) {
+        clearInterval(i);
       }
-      spin.addEventListener("click", () => {
-        if (!finish.classList.contains("hidden")) {
-          finish.classList.add("hidden");
-        }
-        intervalContainer = setInterval(() => {
-          container.style.transform = `rotate(${rotation * 90}deg)`;
+    }
+    spin.addEventListener("click", () => {
+      if (!finish.classList.contains("hidden")) {
+        finish.classList.add("hidden");
+      }
+      spin.textContent += "!"
+      intervalContainer = setInterval(() => {
+        container.style.transform = `rotate(${rotation * 90}deg)`;
+        rotation++;
+      }, 500);
+      if (intervalContainer % 20 === 0) {
+        intervalBigContainer = setInterval(() => {
+          bigconta.style.transform = `rotate(${rotation * 90}deg)`;
           rotation++;
         }, 500);
-        if (intervalContainer % 20 === 0) {
-          intervalBigContainer = setInterval(() => {
-            bigconta.style.transform = `rotate(${rotation * 90}deg)`;
-            rotation++;
-          }, 500);
-          setTimeout(() => {
-            finish.classList.remove("hidden");
-          }, 3000);
-        }
-      });
+        setTimeout(() => {
+          finish.classList.remove("hidden");
+        }, 3000);
+      }
+    });
 
-      stop.addEventListener("click", stopRotatingContainer);
-      finish.addEventListener("click", () => {
-        rotation = 2;
-        clearInterval(intervalBigContainer);
-        stopRotatingContainer();
+    stop.addEventListener("click", stopRotatingContainer);
+    finish.addEventListener("click", () => {
+      rotation = 2;
+      spin.textContent = "Spin faster"
+      clearInterval(intervalBigContainer);
+      stopRotatingContainer();
 
-        container.style.transform = `rotate(0deg)`;
-        bigconta.style.transform = `rotate(0deg)`;
-      });
-    </script>
-  </body>
+      container.style.transform = `rotate(0deg)`;
+      bigconta.style.transform = `rotate(0deg)`;
+    });
+  </script>
+</body>
+
 </html>
